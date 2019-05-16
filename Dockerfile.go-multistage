@@ -1,0 +1,14 @@
+FROM golang:1.12 as build_base
+RUN apt-get update
+RUN apt-get install -y curl
+WORKDIR /go/src/github.com/your-account/your-repo
+ENV GO111MODULE=on
+COPY go.mod .
+COPY go.sum .
+RUN go mod download
+FROM build_base as server_builder
+COPY . .
+RUN go install your-program.go
+FROM gcr.io/distroless/base
+COPY --from=server_builder /go/bin/your-program /bin/your-program
+ENTRYPOINT ["/bin/your-program"]
