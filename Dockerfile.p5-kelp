@@ -2,7 +2,7 @@ FROM perl:5.28
 RUN apt-get update && apt-get -y install curl libpq5 libpq-dev libssl-dev sqlite3 libsqlite3-dev
 RUN cpanm install Kelp
 RUN cpanm install Redis
-RUN cpanm install Devel::REPL
+RUN cpanm install -n Devel::REPL
 RUN cpanm install Term::ReadLine
 RUN cpanm install DBI
 RUN cpanm install Crypt::JWT
