@@ -33,5 +33,6 @@ RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};zef inst
 RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};zef install --verbose --/test cro Lumberjack"
 RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};zef install HTTP::UserAgent"
 RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};zef install WWW"
+EXPOSE 3000
 
 CMD ["tail","-f","/dev/null"]
