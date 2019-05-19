@@ -20,5 +20,7 @@ RUN cpanm install Cookie::Baker::XS
 RUN cpanm install Test2::Suite
 RUN cpanm install -n DateTime::HiRes
 RUN cpanm install -n IO::Socket::SSL
+RUN cpanm install LWP
+RUN cpanm install LWP::Protocol::https
 EXPOSE 3000
 CMD ["tail", "-f", "/dev/null"]
