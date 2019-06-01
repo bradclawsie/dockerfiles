@@ -1,4 +1,4 @@
-FROM perl:5.28
+FROM perl:5.30
 RUN apt-get update && apt-get -y install curl libpq5 libpq-dev libssl-dev sqlite3 libsqlite3-dev
 RUN cpanm install Kelp
 RUN cpanm install Redis
