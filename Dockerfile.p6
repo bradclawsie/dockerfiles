@@ -4,7 +4,7 @@ WORKDIR /root
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 RUN apt-get update && apt-get -y install git libssl-dev build-essential wget curl
 RUN git clone https://github.com/tadzik/rakudobrew ~/.rakudobrew
-ENV RAKUDOVERSION=2019.03.1
+ENV RAKUDOVERSION=master
 RUN /root/.rakudobrew/bin/rakudobrew init Bash > /root/.profile
 RUN cp /root/.profile /root/.bash_profile
 RUN cp /root/.profile /.profile
