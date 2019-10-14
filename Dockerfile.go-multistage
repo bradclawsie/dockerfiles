@@ -1,4 +1,4 @@
-FROM golang:1.12 as build_base
+FROM golang:1.13 as build_base
 RUN apt-get update
 RUN apt-get install -y curl
 WORKDIR /go/src/github.com/your-account/your-repo
