@@ -1,10 +1,10 @@
-FROM debian:stretch
+FROM debian:stable
 
 WORKDIR /root
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
-RUN apt-get update && apt-get -y install git libssl-dev build-essential wget curl
+RUN apt-get update && apt-get -y install git libssl-dev build-essential wget curl libsqlite3-dev libpq-dev
 RUN git clone https://github.com/tadzik/rakudobrew ~/.rakudobrew
-ENV RAKUDOVERSION=2019.03.1
+ENV RAKUDOVERSION=2019.07.1
 RUN /root/.rakudobrew/bin/rakudobrew init Bash > /root/.profile
 RUN cp /root/.profile /root/.bash_profile
 RUN cp /root/.profile /.profile
@@ -26,7 +26,7 @@ RUN chmod a+rx /app/rakudo/bin/perl6
 RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};which zef;zef install Linenoise"
 RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};zef install UUID"
 RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};zef install JSON::Tiny"
-RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};zef install DBIish"
+RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};zef install --/test DBIish"
 RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};zef install Redis"
 RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};zef install JSON::JWT"
 RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};zef install Data::Dump"
