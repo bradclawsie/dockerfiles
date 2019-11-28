@@ -1,0 +1,28 @@
+FROM perl:5.30
+RUN apt-get update && apt-get -y install curl libpq5 libpq-dev libssl-dev sqlite3 libsqlite3-dev
+RUN cpanm install Mojolicious
+RUN cpanm install Mojolicious::Lite
+RUN cpanm install Redis
+RUN cpanm install -n Devel::REPL
+RUN cpanm install Term::ReadLine
+RUN cpanm install DBI
+RUN cpanm install Crypt::JWT
+RUN cpanm install DateTime::Locale
+RUN cpanm install DateTime
+RUN cpanm install Moose
+RUN cpanm install DBD::Pg
+RUN cpanm install URI::Encode
+RUN cpanm install WWW::Form::UrlEncoded::XS
+RUN cpanm install Cookie::Baker::XS
+RUN cpanm install Test2::Suite
+RUN cpanm install -n DateTime::HiRes
+RUN cpanm install IO::Socket::SSL
+RUN cpanm install LWP
+RUN cpanm install LWP::Protocol::https
+RUN cpanm install CryptX
+RUN cpanm install List::AllUtils
+RUN cpanm install Type::Tiny
+RUN cpanm install Types::Standard
+
+EXPOSE 3000
+CMD ["tail", "-f", "/dev/null"]
