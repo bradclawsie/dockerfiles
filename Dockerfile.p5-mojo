@@ -23,6 +23,12 @@ RUN cpanm install CryptX
 RUN cpanm install List::AllUtils
 RUN cpanm install Type::Tiny
 RUN cpanm install Types::Standard
+RUN cpanm install Types::UUID
+RUN cpanm install MooseX::Storage;
+RUN cpanm install Perl::Tidy
+RUN cpanm install Perl::Critic
+RUN cpanm install Digest::Bcrypt
+RUN cpanm install Data::Entropy::Algorithms
 
 EXPOSE 3000
 CMD ["tail", "-f", "/dev/null"]
