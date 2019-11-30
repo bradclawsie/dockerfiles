@@ -29,6 +29,8 @@ RUN cpanm install Perl::Tidy
 RUN cpanm install Perl::Critic
 RUN cpanm install Digest::Bcrypt
 RUN cpanm install Data::Entropy::Algorithms
+RUN cpanm install Log::Log4perl
+RUN cpanm install Test2::Harness
 
 EXPOSE 3000
 CMD ["tail", "-f", "/dev/null"]
