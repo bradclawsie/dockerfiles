@@ -28,7 +28,7 @@ RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};which ze
 RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};zef install UUID"
 RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};zef install JSON::Tiny"
 RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};zef install --/test DBIish"
-RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};zef install Redis"
+RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};zef install Redis::Async"
 RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};zef install JSON::JWT"
 RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};zef install Data::Dump"
 RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION};zef install --verbose --/test cro"
