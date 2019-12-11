@@ -1,0 +1,2 @@
+FROM bradclawsie/raku:2019.11
+RUN /bin/bash -c "source /root/.bashrc && zef install UUID JSON::Tiny Redis::Async JSON::JWT HTTP::UserAgent WWW Log::Async && zef install --/test DBIish cro"
