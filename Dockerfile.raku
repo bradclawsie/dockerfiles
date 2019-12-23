@@ -3,7 +3,7 @@ FROM debian:bullseye-slim
 ENV RAKUDOVERSION=2019.11
 WORKDIR /root
 USER root
-RUN apt-get update && apt-get -y install git libssl-dev build-essential wget curl libsqlite3-dev libpq-dev
+RUN apt-get update && apt-get -y install git build-essential wget curl
 RUN git clone https://github.com/tadzik/rakudobrew /root/.rakudobrew
 RUN /root/.rakudobrew/bin/rakudobrew init Bash >> /root/.profile
 RUN bash -c "source .profile && rakudobrew build moar ${RAKUDOVERSION} && rakudobrew global moar-${RAKUDOVERSION} && rakudobrew build zef"

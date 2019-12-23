@@ -1,2 +1,13 @@
-FROM bradclawsie/raku:2019.11
-RUN /bin/bash -c "source /root/.bashrc && zef install UUID JSON::Tiny Redis::Async JSON::JWT HTTP::UserAgent WWW Log::Async && zef install --/test DBIish cro"
+FROM raku:2019.11
+
+RUN apt-get update && apt-get install -y libssl-dev redis-server redis-tools cmake git libev-dev libsodium-dev libsqlite3-dev libpq-dev 
+
+RUN /bin/bash -c "source /root/.bashrc && zef install UUID JSON::Tiny Redis::Async JSON::JWT HTTP::UserAgent WWW Log::Async Crypt::SodiumScrypt && zef install --/test DBIish cro"
+
+RUN git clone https://github.com/EulerianTechnologies/eredis.git /eredis
+RUN cd /eredis && git submodule update --init && cmake . && make && make install
+RUN cd / && rm -rf /eredis
+
+ENV LD_LIBRARY_PATH="/usr/local/lib:{$LD_LIBRARY_PATH}"
+
+WORKDIR /src
