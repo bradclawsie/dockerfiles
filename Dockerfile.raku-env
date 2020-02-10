@@ -1,4 +1,4 @@
-FROM raku:2019.11
+FROM raku:2020.01
 
 RUN apt-get update && apt-get install -y libssl-dev redis-server redis-tools cmake git libev-dev libsqlite3-dev libpq-dev wget
 

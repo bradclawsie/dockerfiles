@@ -1,6 +1,6 @@
 FROM debian:bullseye-slim
 
-ENV RAKUDOVERSION=2019.11
+ENV RAKUDOVERSION=2020.01
 WORKDIR /root
 USER root
 RUN apt-get update && apt-get -y install git build-essential wget curl
