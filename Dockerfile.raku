@@ -1,15 +1,27 @@
-FROM debian:bullseye-slim
+FROM alpine:latest
 
-ENV RAKUDOVERSION=2020.01
-WORKDIR /root
-USER root
-RUN apt-get update && apt-get -y install git build-essential wget curl
-RUN git clone https://github.com/tadzik/rakudobrew /root/.rakudobrew
-RUN /root/.rakudobrew/bin/rakudobrew init Bash >> /root/.profile
-RUN bash -c "source .profile && rakudobrew build moar ${RAKUDOVERSION} && rakudobrew global moar-${RAKUDOVERSION} && rakudobrew build zef"
-RUN ln -s /root/.rakudobrew/versions/moar-${RAKUDOVERSION}/install /rakudo
-RUN ln -s /root/.rakudobrew/versions/moar-${RAKUDOVERSION}/zef /zef
-RUN echo 'export PATH=${PATH}:/rakudo/bin:/zef/bin' >> /root/.bashrc
-RUN bash -c "source .profile && rakudobrew global moar-${RAKUDOVERSION} && zef install Linenoise App::Prove6 Data::Dump"
-RUN rm -rf /root/.rakudobrew/versions/moar-${RAKUDOVERSION}/src /root/zef /root/.rakudobrew/git_reference
-ENTRYPOINT ["/rakudo/bin/raku"]
+ARG VER="2020.06"
+LABEL version="2.3.2" rakuversion=$VER
+
+ENV PATH="/root/raku-install/bin:/root/raku-install/share/perl6/site/bin:/root/.rakudobrew/bin:${PATH}" \
+    PKGS="curl git" \
+    PKGS_TMP="perl curl-dev linux-headers make gcc musl-dev wget" \
+    ENV="/root/.profile"
+
+RUN mkdir /home/raku \
+    && apk update && apk upgrade \
+    && apk add --no-cache $PKGS $PKGS_TMP \
+    && git clone https://github.com/tadzik/rakudobrew ~/.rakudobrew \
+    && eval "$(~/.rakudobrew/bin/rakudobrew init Sh)"\
+    && rakudobrew build moar $VER --configure-opts='--prefix=/root/raku-install' \
+	&& rm -rf /root/.rakudobrew/versions/moar-$VER \
+	&& rakudobrew register moar-$VER /root/raku-install \
+    && rakudobrew global moar-$VER \
+    && rakudobrew build-zef \
+    && zef install Linenoise App::Prove6 Data::Dump \
+    && apk del $PKGS_TMP \
+    && rm -rf /root/.rakudobrew /root/raku-install/zef
+
+# Runtime
+WORKDIR /home/raku
+CMD ["tail", "-f", "/dev/null"]
