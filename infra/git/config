@@ -1,0 +1,20 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "b7j0c"]
+        url = ssh://brad@b7j0c.org:512/home/brad/bare-repos/dockerfiles
+        fetch = +refs/heads/*:refs/remotes/origin/*
+[remote "github"]
+	url = git@github.com:bradclawsie/dockerfiles.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[remote "gitlab"]
+	url = git@gitlab.com:bradclawsie/dockerfiles.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[remote "sr.ht"]
+	url = git@git.sr.ht:~bradclawsie/dockerfiles
+        fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
