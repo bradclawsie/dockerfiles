@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-ARG VER="2020.07"
+ARG VER="2020.08"
 LABEL version="2.3.2" rakuversion=$VER
 
 ENV PATH="/root/raku-install/bin:/root/raku-install/share/perl6/site/bin:/root/.rakudobrew/bin:${PATH}" \
@@ -18,7 +18,7 @@ RUN mkdir /home/raku \
 	&& rakudobrew register moar-$VER /root/raku-install \
     && rakudobrew global moar-$VER \
     && rakudobrew build-zef \
-    && zef install Linenoise App::Prove6 Data::Dump \
+    && zef install Linenoise App::Prove6 \
     && apk del $PKGS_TMP \
     && rm -rf /root/.rakudobrew /root/raku-install/zef
 
