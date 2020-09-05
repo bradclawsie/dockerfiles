@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-ARG VER="2020.08"
+ARG VER="2020.08.2"
 LABEL version="2.3.2" rakuversion=$VER
 
 ENV PATH="/root/raku-install/bin:/root/raku-install/share/perl6/site/bin:/root/.rakudobrew/bin:${PATH}" \
