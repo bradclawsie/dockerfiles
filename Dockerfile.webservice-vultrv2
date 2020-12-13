@@ -1,0 +1,10 @@
+FROM perl:slim
+RUN apt-get update && apt-get -y install build-essential
+RUN cpanm -n Test2::V0 Test2::Tools::Exception LWP Moo Perl::Critic && rm -rf /root/.cpanm/work
+RUN chown -R root:root /root
+RUN apt-get -y purge build-essential
+RUN apt-get -y autoremove
+RUN apt-get clean
+WORKDIR /app
+EXPOSE 3000
+CMD ["tail", "-f", "/dev/null"]
