@@ -1,10 +1,23 @@
 FROM perl:slim
-RUN apt-get update && apt-get -y install build-essential
-RUN cpanm -n Test2::V0 Test2::Tools::Exception LWP Moo Perl::Critic && rm -rf /root/.cpanm/work
+RUN apt-get update && apt-get -y install build-essential libssl-dev openssl zlib1g-dev
+RUN cpanm -n \
+        Dist::Zilla \
+        LWP \
+        Moo \
+        Perl::Critic \
+        Perl::Critic::TooMuchCode \
+        Perl::Tidy \
+        strictures \
+        Syntax::Keyword::Try \
+        Test::Mock::Guard \
+        Test2::Tools::Exception \
+        Test2::V0 \
+        Types::Standard \
+        && rm -rf /root/.cpanm/work
 RUN chown -R root:root /root
+RUN rm -rf /root/.cpanm && rm -rf /usr/src/perl
 RUN apt-get -y purge build-essential
 RUN apt-get -y autoremove
 RUN apt-get clean
-WORKDIR /app
-EXPOSE 3000
-CMD ["tail", "-f", "/dev/null"]
+WORKDIR /
+CMD ["perl" "-de0"]
