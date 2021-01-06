@@ -1,0 +1,36 @@
+FROM debian:bullseye-slim
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get -y install \
+        cpanminus \
+        libtest2-suite-perl \
+        libterm-readline-gnu-perl \
+        liblist-allutils-perl \
+        libsyntax-keyword-try-perl \
+        libperl-critic-perl \
+        perltidy \
+        libdata-uuid-perl \
+        libmultidimensional-perl \
+        libindirect-perl \
+        libbareword-filehandles-perl \
+        libcpanel-json-xs-perl \
+        libev-perl \
+        libio-socket-socks-perl \
+        libio-socket-ssl-perl \
+        libmojolicious-perl \
+        libdbi-perl \
+        libdbd-sqlite3 \
+        libdbd-sqlite3-perl \
+        libtest-mock-redis-perl \
+        libcryptx-perl \
+        libcrypt-jwt-perl \
+        libmojo-sqlite-perl \
+        libgit-raw-perl \
+        ca-certificates
+RUN cpanm -n Mojo::Redis Test2::Harness Perl::Critic::TooMuchCode && rm -rf /root/.cpanm/work
+RUN rm -f /root/.cpan/build.log && rm -f /root/.cpan/latest-build
+RUN apt-get -y autoremove
+RUN apt-get clean
+RUN chown -R root:root /root
+WORKDIR /grokloc
+EXPOSE 3000
+CMD ["tail", "-f", "/dev/null"]
