@@ -1,2 +1,2 @@
 #!/bin/sh
-docker run --rm -it -v `pwd`:/src raku:env "$@"
+docker run --rm -it -v `pwd`:/src b7j0c/raku:dev "$@"
