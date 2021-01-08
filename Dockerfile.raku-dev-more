@@ -1,0 +1,30 @@
+FROM b7j0c/raku:dev
+
+# UUID
+RUN apt-get install -y libuuid1
+RUN zef install LibUUID
+
+# Cro
+RUN zef install --/test Cro
+
+# Crypt
+RUN apt-get install -y libgcrypt20 libgcrypt20-dev
+RUN zef install Base64::Native
+RUN zef install Gcrypt
+
+# DB
+RUN apt-get install -y sqlite3 libsqlite3-dev libpq5 libpq-dev
+RUN zef install DBIish
+RUN zef install File::Directory::Tree
+
+# OO Monitors
+RUN zef install OO::Monitors
+
+# Logging
+RUN zef install Log::Async
+
+RUN rm -rf /root/.rakudobrew /root/raku-install/zef
+
+# Runtime
+WORKDIR /home/raku
+CMD ["tail", "-f", "/dev/null"]
