@@ -1,27 +1,55 @@
-FROM alpine:latest
+FROM debian:bullseye-slim
+RUN apt-get update
+ARG BUILD_PKGS="wget git build-essential"
+RUN apt-get install -y ${BUILD_PKGS}
+ARG RAKU_HOME=/home/raku
+RUN mkdir ${RAKU_HOME}
+ENV PATH="${RAKU_HOME}/bin:${RAKU_HOME}/share/perl6/site/bin:${PATH}"
+WORKDIR /root
+ARG RAKU_DIR=rakudo-moar-2020.12-01-linux-x86_64-gcc
+ARG RAKU_TGZ=${RAKU_DIR}.tar.gz
+ARG RAKU_DL=https://rakudo.org/dl/rakudo/${RAKU_TGZ}
+RUN wget ${RAKU_DL}
+RUN tar -xf ${RAKU_TGZ}
+RUN mv ${RAKU_DIR}/* ${RAKU_HOME}/.
+RUN rm *.gz
+RUN rm -rf ${RAKU_DIR}
 
-ARG VER="2020.12"
-LABEL rakuversion=$VER
+# Testing
+RUN zef install Linenoise App::Prove6
 
-ENV PATH="/root/raku-install/bin:/root/raku-install/share/perl6/site/bin:/root/.rakudobrew/bin:${PATH}" \
-    PKGS="curl git" \
-    PKGS_TMP="perl curl-dev linux-headers make gcc musl-dev wget" \
-    ENV="/root/.profile"
+# UUID
+RUN apt-get install -y libuuid1
+RUN zef install LibUUID
 
-RUN mkdir /home/raku \
-    && apk update && apk upgrade \
-    && apk add --no-cache $PKGS $PKGS_TMP \
-    && git clone https://github.com/tadzik/rakudobrew ~/.rakudobrew \
-    && eval "$(~/.rakudobrew/bin/rakudobrew init Sh)"\
-    && rakudobrew build moar $VER --configure-opts='--prefix=/root/raku-install' \
-	&& rm -rf /root/.rakudobrew/versions/moar-$VER \
-	&& rakudobrew register moar-$VER /root/raku-install \
-    && rakudobrew global moar-$VER \
-    && rakudobrew build-zef \
-    && zef install Linenoise App::Prove6 
+# Cro
+RUN zef install --/test Cro
 
-RUN apk del $PKGS_TMP
-RUN rm -rf /root/.rakudobrew /root/raku-install/zef
+# Crypt
+RUN apt-get install -y libgcrypt20 libgcrypt20-dev
+RUN zef install Base64::Native
+RUN zef install Gcrypt
+
+# DB
+RUN apt-get install -y sqlite3 libsqlite3-dev libpq5 libpq-dev
+RUN zef install DBIish
+RUN zef install File::Directory::Tree
+
+# OO Monitors
+RUN zef install OO::Monitors
+
+# Logging
+RUN zef install Log::Async
+
+# Curl
+RUN apt-get install libcurl4 libcurl4-openssl-dev
+RUN zef install LibCurl
+
+# JSON
+RUN zef install JSON::Fast
+
+RUN apt-get purge -y ${BUILD_PKGS}
+RUN apt-get clean
 
 # Runtime
 WORKDIR /home/raku
