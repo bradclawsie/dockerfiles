@@ -23,7 +23,8 @@ RUN apt-get install -y libuuid1
 RUN zef install LibUUID
 
 # Cro
-RUN zef install --/test Cro
+RUN apt-get install -y libssl-dev
+RUN zef install --/test cro
 
 # Crypt
 RUN apt-get install -y libgcrypt20 libgcrypt20-dev
