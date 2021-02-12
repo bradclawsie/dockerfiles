@@ -49,6 +49,9 @@ RUN zef install LibCurl
 # JSON
 RUN zef install JSON::Fast
 
+# Cro Testing
+RUN  zef install Cro::HTTP::Test
+
 RUN apt-get purge -y ${BUILD_PKGS}
 RUN apt-get clean
 
