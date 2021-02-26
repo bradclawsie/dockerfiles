@@ -6,7 +6,7 @@ ARG RAKU_HOME=/home/raku
 RUN mkdir ${RAKU_HOME}
 ENV PATH="${RAKU_HOME}/bin:${RAKU_HOME}/share/perl6/site/bin:${PATH}"
 WORKDIR /root
-ARG RAKU_DIR=rakudo-moar-2020.12-01-linux-x86_64-gcc
+ARG RAKU_DIR=rakudo-moar-2021.02.1-01-linux-x86_64-gcc
 ARG RAKU_TGZ=${RAKU_DIR}.tar.gz
 ARG RAKU_DL=https://rakudo.org/dl/rakudo/${RAKU_TGZ}
 RUN wget ${RAKU_DL}
